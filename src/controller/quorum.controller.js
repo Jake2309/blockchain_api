@@ -22,7 +22,6 @@ QuorumController.deployNew721Token = async (req, res) => {
         return res.json(data.tokenResponse)
     }
     else return res.json('data false');
-
 }
 
 QuorumController.deployNew1155Token = async (req, res) => {

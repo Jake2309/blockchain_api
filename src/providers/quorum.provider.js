@@ -10,8 +10,6 @@ class QuorumProvider {
             baseURL: 'http://127.0.0.1:3001',
             timeout: 5000
         });
-
-        // await this.init()
     }
 
     static getInstance(conString) {
@@ -69,8 +67,16 @@ class QuorumProvider {
 
             await contracts.Token1155Factory.deployed().then((instance) => {
                 console.log('into deployed Token1155Factory')
-                // console.log(contracts.TokenFactory.web3.eth.defaultAccount())
                 contracts.Token1155FactoryInstance = instance
+            })
+
+            var marketPlaceMetadata = await this.axiosInstance.get("NFTMarketPlace.json")
+            contracts.NFTMarketPlace = await TruffleContract(marketPlaceMetadata.data)
+            await contracts.NFTMarketPlace.setProvider(contracts.web3.currentProvider)
+
+            await contracts.NFTMarketPlace.deployed().then((instance) => {
+                console.log('into deployed NFTMarketPlace')
+                contracts.MarketPlaceIns = instance
             })
 
 
